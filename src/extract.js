@@ -14,7 +14,7 @@ async function extractFromDocument(file, temporaryDirectory) {
 
   const documentFile = await convertDocument(file, target);
 
-  return extractFromPDF(documentFile, temporaryDirectory);
+  return await extractFromPDF(documentFile, temporaryDirectory);
 }
 
 async function extractFromPDF(file, temporaryDirectory) {

@@ -1,8 +1,12 @@
 #!/usr/bin/env node
 
 const path = require('path');
-const execute = require('../src/utils/execute');
+const exec = require('node-exec-promise').exec;
 
 const [, , inputFile] = process.argv;
 
-execute(`npm run --prefix ${path.resolve(path.join(__dirname, '..'))} extract ${inputFile}`);
+exec(`npm run --prefix ${path.resolve(path.join(__dirname, '..'))} extract ${inputFile}`).then(function(out) {
+  console.log(out.stdout, out.stderr);
+}, function(err) {
+  console.error(err);
+});
