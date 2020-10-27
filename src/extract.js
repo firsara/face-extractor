@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 import FileType from 'file-type';
 
@@ -31,9 +32,19 @@ async function extractFromPDF(file, temporaryDirectory) {
 async function extractFromImage(file, temporaryDirectory) {
   console.log(`\nextracting faces from image "${file}"`);
 
-  const faces = await extractFacesFromImage(file);
+  // TODO: make output folder and square / offset as options
+  const faces = await extractFacesFromImage(file, {
+    square: true,
+    offset: 50,
+    background: { r: 0, g: 0, b: 0, alpha: 0 },
+  });
 
-  console.log(faces);
+  faces.forEach((face, index) =>
+    fs.writeFileSync(
+      `/Users/firsara/Downloads/test/faces/face-${index}.png`,
+      face,
+    ),
+  );
 }
 
 export default async function extract(file, temporaryDirectory) {
