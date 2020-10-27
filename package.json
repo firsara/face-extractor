@@ -1,0 +1,26 @@
+{
+  "name": "face-extractor",
+  "description": "extract faces from doc, pdf or image files",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "src/index.js",
+  "bin": {
+    "face-extractor": "./bin/face-extractor"
+  },
+  "scripts": {
+    "extract": "node_modules/.bin/babel-node src/index.js"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs-node": "^2.6.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "canvas": "^2.6.1",
+    "face-api.js": "^0.22.2",
+    "file-type": "^16.0.0",
+    "pako": "^1.0.10",
+    "pdf-lib": "^0.6.1",
+    "pngjs": "^3.4.0",
+    "rimraf": "^2.6.3",
+    "tmp": "^0.2.1"
+  }
+}
