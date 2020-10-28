@@ -7,16 +7,18 @@
   "license": "MIT",
   "main": "src/index.js",
   "private": true,
-  "keywords": ["face-api"],
+  "keywords": [
+    "face-api"
+  ],
   "bin": {
     "face-extractor": "bin/face-extractor"
   },
   "scripts": {
+    "build": "npx babel src --out-dir lib",
     "extract": "node_modules/babel-cli/bin/babel-node.js src/index.js"
   },
   "dependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
+    "babel-polyfill": "^6.26.0",
     "canvas": "^2.6.1",
     "color-rgba": "^2.2.3",
     "command-line-args": "^5.1.1",
@@ -29,5 +31,9 @@
     "rimraf": "^2.6.3",
     "sharp": "^0.26.2",
     "tmp": "^0.2.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
   }
 }

@@ -1,29 +1,3 @@
 #!/usr/bin/env node
-
-const path = require('path');
-const spawn = require('child_process').spawn;
-
-const args = [...process.argv].slice(2, process.argv.length);
-
-// NOTE: put quotes around command line arguments that don't start with a dash
-const stringifiedArgs = args
-  .map((a) => (a.substring(0, 1) === '-' ? a : `"${a}"`))
-  .join(' ');
-
-const dir = path.resolve(path.join(__dirname, '..'));
-const cmd = `${dir}/node_modules/babel-cli/bin/babel-node.js`;
-const scriptTarget = `${dir}/src/index.js`;
-
-console.log();
-console.log(`> ${cmd} ${scriptTarget} ${stringifiedArgs}`);
-console.log();
-
-const proc = spawn(cmd, [scriptTarget, ...args]);
-
-proc.stdout.on('data', (data) => {
-  console.log(data.toString());
-});
-
-proc.stderr.on('data', (data) => {
-  console.error(data.toString());
-});
+require('babel-polyfill');
+require('../lib/index');
