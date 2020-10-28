@@ -4,8 +4,16 @@ extract faces as png images from files
 
 ## Installation
 
+#### Install from npm registry
+
 ```sh
-npm install face-extractor --save
+npm install -g face-extractor
+```
+
+#### Install from git repo
+
+```sh
+npm install -g git+ssh://git@github.com/firsara/face-extractor.git
 ```
 
 ## Usage
