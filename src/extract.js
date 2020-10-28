@@ -58,7 +58,6 @@ export default async function extract(options, temporaryDirectory) {
   const fileExtension = path.extname(options.input.path).toLowerCase();
   const fileType = await FileType.fromFile(options.input.path);
 
-  // TODO: try to support open office documents!
   switch (fileType.ext) {
     case 'cfb':
       // NOTE: cfb file type could be doc, xls, ppt, msi
@@ -76,6 +75,7 @@ export default async function extract(options, temporaryDirectory) {
         temporaryDirectory,
       );
     case 'docx':
+    case 'odt':
       return extractFromDocument(
         options.input.path,
         options,

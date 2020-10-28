@@ -80,8 +80,8 @@ async function getFaceFromImage(imagePath, face, opts) {
 
   const extendLeft = Math.abs(targetLeft - actualLeft);
   const extendTop = Math.abs(targetTop - actualTop);
-  const extendRight = Math.abs(targetWidth - actualWidth - extendLeft); // TODO: check this
-  const extendBottom = Math.abs(targetHeight - actualHeight - extendTop); // TODO: check this
+  const extendRight = Math.abs(targetWidth - actualWidth - extendLeft);
+  const extendBottom = Math.abs(targetHeight - actualHeight - extendTop);
 
   console.log(`
 getting face from image ${imagePath}:

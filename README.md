@@ -32,11 +32,8 @@ face-extractor input-file.png
 
 - doc
 - docx
+- odt
 - pdf
 - png
 - jpeg
 - jpg
-
-# TODO
-
-write routine that retries 3-5 times if face-detect exits with error code 2 or process is stuck for more than 30 seconds
