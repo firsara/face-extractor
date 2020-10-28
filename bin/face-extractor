@@ -1,21 +1,29 @@
 #!/usr/bin/env node
 
 const path = require('path');
-const exec = require('node-exec-promise').exec;
+const spawn = require('child_process').spawn;
 
 const args = [...process.argv].slice(2, process.argv.length);
 
-// TODO: write routine that tries 3-5 times until it fails finally
 // NOTE: put quotes around command line arguments that don't start with a dash
-const stringifiedArgs = args.map(a => a.substring(0, 1) === '-' ? a : `"${a}"`).join(' ');
-const cmd = `${path.resolve(path.join(__dirname, '..'))}/node_modules/babel-cli/bin/babel-node.js src/index.js ${stringifiedArgs}`;
+const stringifiedArgs = args
+  .map((a) => (a.substring(0, 1) === '-' ? a : `"${a}"`))
+  .join(' ');
+
+const dir = path.resolve(path.join(__dirname, '..'));
+const cmd = `${dir}/node_modules/babel-cli/bin/babel-node.js`;
+const scriptTarget = 'src/index.js';
 
 console.log();
-console.log(`> ${cmd}`);
+console.log(`> ${cmd} ${scriptTarget} ${stringifiedArgs}`);
 console.log();
 
-exec(cmd).then(function(out) {
-  console.log(out.stdout, out.stderr);
-}, function(err) {
-  console.error(err);
+const proc = spawn(cmd, [scriptTarget, ...args]);
+
+proc.stdout.on('data', (data) => {
+  console.log(data.toString());
+});
+
+proc.stderr.on('data', (data) => {
+  console.error(data.toString());
 });

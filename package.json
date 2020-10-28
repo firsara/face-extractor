@@ -19,7 +19,6 @@
     "face-api.js": "^0.22.2",
     "file-type": "^16.0.0",
     "image-size": "^0.9.3",
-    "node-exec-promise": "^1.0.2",
     "pako": "^1.0.10",
     "pdf-lib": "^0.6.1",
     "pngjs": "^3.4.0",
