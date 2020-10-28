@@ -1,9 +1,13 @@
 {
   "name": "face-extractor",
   "description": "extract faces from doc, pdf or image files",
+  "author": "Fabian Irsara <info@fabianirsara.com>",
+  "repository": "https://github.com/firsara/face-extractor.git",
   "version": "0.1.0",
   "license": "MIT",
   "main": "src/index.js",
+  "private": true,
+  "keywords": ["face-api"],
   "bin": {
     "face-extractor": "bin/face-extractor"
   },
