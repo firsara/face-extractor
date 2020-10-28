@@ -54,17 +54,17 @@ async function getFaceFromImage(imagePath, face, opts) {
   const height = Math.ceil(face.box.height);
 
   const longestSide = Math.max(width, height);
-  const offset = Math.ceil((longestSide / 100) * opts.offset);
+  const pad = Math.ceil((longestSide / 100) * opts.pad);
 
   const horizontalSize = opts.square ? longestSide : width;
   const verticalSize = opts.square ? longestSide : height;
   const startX = x - Math.round((horizontalSize - width) / 2);
   const startY = y - Math.round((verticalSize - height) / 2);
 
-  const targetLeft = startX - offset;
-  const targetTop = startY - offset;
-  const targetWidth = horizontalSize + offset * 2;
-  const targetHeight = verticalSize + offset * 2;
+  const targetLeft = startX - pad;
+  const targetTop = startY - pad;
+  const targetWidth = horizontalSize + pad * 2;
+  const targetHeight = verticalSize + pad * 2;
 
   const actualLeft = Math.max(0, targetLeft);
   const actualTop = Math.max(0, targetTop);
@@ -93,7 +93,7 @@ width: ${width}
 height: ${height}
 
 square: ${opts.square ? 'true' : 'false'}
-offset: ${offset}
+pad: ${pad}
 background: ${JSON.stringify(opts.background)}
 `);
 
@@ -117,7 +117,7 @@ background: ${JSON.stringify(opts.background)}
 
 const defaultOptions = {
   square: false,
-  offset: 20, // NOTE: offset is a percentage value from 0 to 100
+  pad: 20, // NOTE: pad is a percentage value from 0 to 100
   background: { r: 0, g: 0, b: 0, alpha: 0 },
 };
 

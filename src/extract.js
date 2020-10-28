@@ -7,17 +7,17 @@ import convertDocument from './processes/convertDocument';
 import extractImagesFromPDF from './processes/extractImagesFromPDF';
 import extractFacesFromImage from './processes/extractFacesFromImage';
 
-async function extractFromDocument(file, temporaryDirectory) {
+async function extractFromDocument(file, options, temporaryDirectory) {
   const target = path.join(temporaryDirectory, 'converted-document.pdf');
 
   console.log(`\nconverting document "${file}" to pdf "${target}"`);
 
   const documentFile = await convertDocument(file, target);
 
-  return await extractFromPDF(documentFile, temporaryDirectory);
+  return await extractFromPDF(documentFile, options, temporaryDirectory);
 }
 
-async function extractFromPDF(file, temporaryDirectory) {
+async function extractFromPDF(file, options, temporaryDirectory) {
   const target = path.join(temporaryDirectory, 'pdf-images');
 
   console.log(`\nextracting images from pdf "${file}" to directory ${target}`);
@@ -25,49 +25,72 @@ async function extractFromPDF(file, temporaryDirectory) {
   const images = await extractImagesFromPDF(file, target);
 
   return await Promise.all(
-    images.map((image) => extractFromImage(image, temporaryDirectory)),
-  );
-}
-
-async function extractFromImage(file, temporaryDirectory) {
-  console.log(`\nextracting faces from image "${file}"`);
-
-  // TODO: make output folder and square / offset as options
-  const faces = await extractFacesFromImage(file, {
-    square: true,
-    offset: 50,
-    background: { r: 0, g: 0, b: 0, alpha: 0 },
-  });
-
-  faces.forEach((face, index) =>
-    fs.writeFileSync(
-      `/Users/firsara/Downloads/test/faces/face-${index}.png`,
-      face,
+    images.map((image, index) =>
+      extractFromImage(image, options, temporaryDirectory, index),
     ),
   );
 }
 
-export default async function extract(file, temporaryDirectory) {
-  const fileExtension = path.extname(file).toLowerCase();
-  const fileType = await FileType.fromFile(file);
+async function extractFromImage(file, options, temporaryDirectory, prefix = 0) {
+  console.log(`\nextracting faces from image "${file}"`);
+
+  const faces = await extractFacesFromImage(file, {
+    square: options.square,
+    pad: options.pad,
+    background: options.background.rgba,
+  });
+
+  console.log('\n');
+
+  faces.forEach((face, index) => {
+    const outputFile = path.join(
+      options.output.path,
+      `face-${prefix}-${index}.png`,
+    );
+
+    console.log(`writing face to "${outputFile}"`);
+
+    fs.writeFileSync(outputFile, face);
+  });
+}
+
+export default async function extract(options, temporaryDirectory) {
+  const fileExtension = path.extname(options.input.path).toLowerCase();
+  const fileType = await FileType.fromFile(options.input.path);
 
   // TODO: try to support open office documents!
   switch (fileType.ext) {
     case 'cfb':
       // NOTE: cfb file type could be doc, xls, ppt, msi
       if (fileExtension !== '.doc') {
-        throw new UnknownFileTypeError(file, fileType, fileExtension);
+        throw new UnknownFileTypeError(
+          options.input.path,
+          fileType,
+          fileExtension,
+        );
       }
 
-      return extractFromDocument(file, temporaryDirectory);
+      return extractFromDocument(
+        options.input.path,
+        options,
+        temporaryDirectory,
+      );
     case 'docx':
-      return extractFromDocument(file, temporaryDirectory);
+      return extractFromDocument(
+        options.input.path,
+        options,
+        temporaryDirectory,
+      );
     case 'pdf':
-      return extractFromPDF(file, temporaryDirectory);
+      return extractFromPDF(options.input.path, options, temporaryDirectory);
     case 'jpg':
     case 'png':
-      return extractFromImage(file, temporaryDirectory);
+      return extractFromImage(options.input.path, options, temporaryDirectory);
     default:
-      throw new UnknownFileTypeError(file, fileType, fileExtension);
+      throw new UnknownFileTypeError(
+        options.input.path,
+        fileType,
+        fileExtension,
+      );
   }
 }

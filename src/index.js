@@ -2,20 +2,8 @@ import fs from 'fs';
 import tmp, { setGracefulCleanup } from 'tmp';
 import rimraf from 'rimraf';
 
+import commandLineArguments from './command-line-arguments';
 import extract from './extract';
-
-const [, , inputFile] = process.argv;
-
-if (!inputFile) {
-  console.error('input file must be specified!');
-  console.log('npm run extract cv.doc');
-  process.exit(2);
-}
-
-if (!fs.existsSync(inputFile)) {
-  console.error(`file "${inputFile}" does not exist`);
-  process.exit(2);
-}
 
 function cleanup(eventType, temporaryDirectory) {
   if (fs.existsSync(temporaryDirectory)) {
@@ -26,7 +14,7 @@ function cleanup(eventType, temporaryDirectory) {
 
 async function proc(temporaryDirectory) {
   try {
-    await extract(inputFile, temporaryDirectory);
+    await extract(commandLineArguments, temporaryDirectory);
   } catch (err) {
     console.error(err);
     process.exit(2);

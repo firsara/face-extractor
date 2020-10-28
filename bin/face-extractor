@@ -3,9 +3,18 @@
 const path = require('path');
 const exec = require('node-exec-promise').exec;
 
-const [, , inputFile] = process.argv;
+const args = [...process.argv].slice(2, process.argv.length);
 
-exec(`npm run --prefix ${path.resolve(path.join(__dirname, '..'))} extract ${inputFile}`).then(function(out) {
+// TODO: write routine that tries 3-5 times until it fails finally
+// NOTE: put quotes around command line arguments that don't start with a dash
+const stringifiedArgs = args.map(a => a.substring(0, 1) === '-' ? a : `"${a}"`).join(' ');
+const cmd = `${path.resolve(path.join(__dirname, '..'))}/node_modules/babel-cli/bin/babel-node.js src/index.js ${stringifiedArgs}`;
+
+console.log();
+console.log(`> ${cmd}`);
+console.log();
+
+exec(cmd).then(function(out) {
   console.log(out.stdout, out.stderr);
 }, function(err) {
   console.error(err);
