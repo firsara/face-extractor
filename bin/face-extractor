@@ -12,7 +12,7 @@ const stringifiedArgs = args
 
 const dir = path.resolve(path.join(__dirname, '..'));
 const cmd = `${dir}/node_modules/babel-cli/bin/babel-node.js`;
-const scriptTarget = 'src/index.js';
+const scriptTarget = `${dir}/src/index.js`;
 
 console.log();
 console.log(`> ${cmd} ${scriptTarget} ${stringifiedArgs}`);
