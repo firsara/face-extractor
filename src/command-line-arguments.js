@@ -70,7 +70,7 @@ const options = commandLineArgs([
 
 if (!(options.input && !!options.input.path)) {
   console.error('\ninput file must be specified!');
-  console.error('\n> npm run extract cv.doc\n');
+  console.error('\n> face-extractor cv.doc\n');
   process.exit(2);
 }
 
@@ -81,7 +81,7 @@ if (!options.input.exists) {
 
 if (!(options.output && !!options.output.path)) {
   console.error('\noutput directory must be specified!');
-  console.error('\n> npm run extract cv.doc -o ~/output/directory\n');
+  console.error('\n> face-extractor cv.doc --output ~/output/directory\n');
   process.exit(2);
 }
 
