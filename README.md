@@ -32,8 +32,8 @@ this will extract all detected faces in all images in given document and save th
 
 ## Options
 
-- `--input`: a string pointing to the desired input file
-- `--output`: a string pointing to the desired output folder
+- `--input` **(Required)**:  a string pointing to the desired input file
+- `--output` **(Required)**:  a string pointing to the desired output folder
 - `--background`: a string representing the desired background color (if extracted face needs to be filled with a background). i.e. `#000`, `rgba(255, 100, 50, 0.5)`, etc.
 - `--square`: if passed, extracts a square image from detected faces
 - `--pad`: a number, defining how much spacing should be added around the detected face (value is defined as a percentage, based on the size of the detected face. i.e. a value of `100` would add double the width and height to the image than it is actually detected)
