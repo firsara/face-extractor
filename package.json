@@ -29,7 +29,7 @@
     "pdf-lib": "^0.6.1",
     "pngjs": "^3.4.0",
     "rimraf": "^2.6.3",
-    "sharp": "^0.26.2",
+    "sharp": "0.26.1",
     "tmp": "^0.2.1"
   },
   "devDependencies": {
