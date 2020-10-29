@@ -4,6 +4,12 @@ extract faces as png images from files
 
 ## Installation
 
+#### Install dependencies
+
+```sh
+brew install pkg-config cairo pango libpng jpeg giflib librsvg
+```
+
 #### Install from npm registry
 
 ```sh
