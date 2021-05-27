@@ -27,7 +27,7 @@ npm install -g face-extractor
 #### Install from git repo
 
 ```sh
-npm install -g git+ssh://git@github.com/firsara/face-extractor.git
+npm install -g face-extractor
 ```
 
 ## Usage
