@@ -21,6 +21,12 @@ async function proc(temporaryDirectory) {
   }
 }
 
+// import nodejs bindings to native tensorflow,
+// not required, but will speed up things drastically (python required)
+if (commandLineArguments.tensorflow) {
+  require('@tensorflow/tfjs-node');
+}
+
 const { name: temporaryDirectory } = tmp.dirSync();
 console.log(`creating temporary directory: "${temporaryDirectory}"`);
 

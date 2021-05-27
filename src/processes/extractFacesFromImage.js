@@ -1,8 +1,3 @@
-// import nodejs bindings to native tensorflow,
-// not required, but will speed up things drastically (python required)
-// TODO: install and get to work
-// import '@tensorflow/tfjs-node';
-
 import fs from 'fs';
 import path from 'path';
 import { promisify } from 'util';

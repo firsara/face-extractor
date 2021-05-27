@@ -66,6 +66,11 @@ const options = commandLineArgs([
     type: (color) => new BackgroundType(color),
     defaultValue: new BackgroundType('#fff'),
   },
+  {
+    name: 'tensorflow',
+    type: Boolean,
+    defaultValue: false,
+  },
 ]);
 
 if (!(options.input && !!options.input.path)) {
