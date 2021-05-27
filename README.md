@@ -9,13 +9,13 @@ extract faces as png images from files
 ##### OSX
 
 ```sh
-brew install pkg-config cairo pango libpng jpeg giflib librsvg
+brew install pkg-config cairo pango libpng jpeg giflib librsvg unoconv
 ```
 
 ##### Ubuntu
 
 ```sh
-sudo apt-get install pkg-config libcairo2-dev libpango-1.0-0 libpng-dev libjpeg-dev libgif-dev librsvg2-bin
+sudo apt-get install pkg-config libcairo2-dev libpango-1.0-0 libpng-dev libjpeg-dev libgif-dev librsvg2-bin unoconv
 ```
 
 #### Install from npm registry
