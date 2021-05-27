@@ -1,11 +1,15 @@
 import fs from 'fs';
 import path from 'path';
 import FileType from 'file-type';
+import { promisify } from 'util';
+import sizeOf from 'image-size';
 
 import UnknownFileTypeError from './errors/UnknownFileTypeError';
 import convertDocument from './processes/convertDocument';
 import extractImagesFromPDF from './processes/extractImagesFromPDF';
 import extractFacesFromImage from './processes/extractFacesFromImage';
+
+const asyncSizeOf = promisify(sizeOf);
 
 async function extractFromDocument(file, options, temporaryDirectory) {
   const target = path.join(temporaryDirectory, 'converted-document.pdf');
@@ -32,7 +36,16 @@ async function extractFromPDF(file, options, temporaryDirectory) {
 }
 
 async function extractFromImage(file, options, temporaryDirectory, prefix = 0) {
+  const filesize = fs.statSync(file).size / 1024;
+  const { width, height } = await asyncSizeOf(file);
+
+  if (filesize < 10 || width < 50 || height < 50) {
+    return;
+  }
+
   console.log(`\nextracting faces from image "${file}"`);
+  console.log(`filesize: ${Math.round(filesize * 100) / 100}kb`);
+  console.log(`image size: ${width}x${height}px`);
 
   const faces = await extractFacesFromImage(file, {
     square: options.square,
