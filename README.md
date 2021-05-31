@@ -24,12 +24,6 @@ sudo apt-get install pkg-config libcairo2-dev libpango-1.0-0 libpng-dev libjpeg-
 npm install -g face-extractor
 ```
 
-#### Install from git repo
-
-```sh
-npm install -g face-extractor
-```
-
 ## Usage
 
 ```sh
@@ -37,6 +31,16 @@ face-extractor /path/to/file.docx --output /path/to/output/folder --tensorflow -
 ```
 
 this will extract all detected faces in all images in given document and save them to `/path/to/output/folder/face-${imageIndex}-${faceIndex}.png`
+
+### Using Tensorflow
+
+If you want to use tensorflow native bindings you have to install them globally like so:
+
+```sh
+npm install -g @tensorflow/tfjs-node@1.7.4
+```
+
+Note that we have to specify version lower than 2 because `face-api.js` is not compatible with newer versions of tensorflow.
 
 ## Options
 
