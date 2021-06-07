@@ -3,7 +3,7 @@
   "description": "extract faces from doc, pdf or image files",
   "author": "Fabian Irsara <info@fabianirsara.com>",
   "repository": "https://github.com/firsara/face-extractor.git",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "license": "MIT",
   "main": "src/index.js",
   "keywords": [
