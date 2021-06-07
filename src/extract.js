@@ -36,15 +36,22 @@ async function extractFromPDF(file, options, temporaryDirectory) {
 }
 
 async function extractFromImage(file, options, temporaryDirectory, prefix = 0) {
-  const filesize = fs.statSync(file).size / 1024;
+  const filesize = fs.statSync(file).size;
   const { width, height } = await asyncSizeOf(file);
 
-  if (filesize < 10 || width < 50 || height < 50) {
+  if (
+    filesize < options.detectMinFilesize ||
+    width < options.detectMinImageWidth ||
+    height < options.detectMinImageHeight
+  ) {
+    console.log(`\nskipping face extraction from image "${file}"`);
+    console.log(`filesize: ${Math.round((filesize / 1024) * 100) / 100}kb`);
+    console.log(`image size: ${width}x${height}px`);
     return;
   }
 
   console.log(`\nextracting faces from image "${file}"`);
-  console.log(`filesize: ${Math.round(filesize * 100) / 100}kb`);
+  console.log(`filesize: ${Math.round((filesize / 1024) * 100) / 100}kb`);
   console.log(`image size: ${width}x${height}px`);
 
   const faces = await extractFacesFromImage(file, {

@@ -71,6 +71,21 @@ const options = commandLineArgs([
     type: Boolean,
     defaultValue: false,
   },
+  {
+    name: 'detectMinImageWidth',
+    type: Number,
+    defaultValue: 1,
+  },
+  {
+    name: 'detectMinImageHeight',
+    type: Number,
+    defaultValue: 1,
+  },
+  {
+    name: 'detectMinFilesize',
+    type: Number,
+    defaultValue: 1,
+  },
 ]);
 
 if (!(options.input && !!options.input.path)) {
