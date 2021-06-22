@@ -84,7 +84,7 @@ function savePng(image) {
       .pack()
       .on('data', (data) => buffer.push(...data))
       .on('end', () => resolve(Buffer.from(buffer)))
-      .on('error', (err) => reject(err));
+      .on('error', (err) => reject('err'));
   });
 }
 
@@ -187,13 +187,20 @@ export default async function extractImagesFromPDF(file, outputDirectory) {
 
   for (const img of imagesInDoc) {
     if (!img.isAlphaLayer) {
-      const imageData = img.type === 'jpg' ? img.data : await savePng(img);
-      const outputFile = `${outputDirectory}/out${idx + 1}.png`;
-      console.log(`extracting image: ${outputFile}`);
-      fs.writeFileSync(outputFile, imageData);
-      idx += 1;
+      try {
+        const imageData = img.type === 'jpg' ? img.data : await savePng(img);
+        const outputFile = `${outputDirectory}/out${idx + 1}.png`;
+        console.log(`extracting image: ${outputFile}`);
+        fs.writeFileSync(outputFile, imageData);
+        idx += 1;
 
-      extractedImages.push(outputFile);
+        extractedImages.push(outputFile);
+      } catch (err) {
+        console.log();
+        console.error('error while trying to extract image');
+        console.error(err);
+        console.log();
+      }
     }
   }
 
